@@ -16,4 +16,4 @@ Credits
 
 This project is based on Skillcate AI "Sentiment Analysis Project — with traditional ML & NLP".
 
-Add the `--run_preprocessing` flag to rerun the preprocessing step.
+To train the model run `python model-training.py1`, add the `--run_preprocessing` flag to rerun the preprocessing step.
