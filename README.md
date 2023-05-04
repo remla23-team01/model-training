@@ -15,3 +15,5 @@ Dependencies:
 Credits
 
 This project is based on Skillcate AI "Sentiment Analysis Project — with traditional ML & NLP".
+
+Add the `--run_preprocessing` flag to rerun the preprocessing step.

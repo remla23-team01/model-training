@@ -1,3 +1,4 @@
+import argparse
 import numpy as np
 import pandas as pd
 import re
@@ -15,7 +16,7 @@ from sklearn.metrics import confusion_matrix, accuracy_score
 
 
 def get_dataset(filename):
-    dataset = pd.read_csv(filename, delimiter = '\t', quoting = 3)
+    dataset = pd.read_csv(filename, delimiter='\t', quoting=3)
     return dataset
 
 
@@ -24,7 +25,7 @@ def remove_stopwords(dataset):
     all_stopwords = stopwords.words('english')
     all_stopwords.remove('not')
 
-    corpus=[]
+    corpus = []
 
     for i in range(0, 900):
         review = re.sub('[^a-zA-Z]', ' ', dataset['Review'][i])
@@ -33,28 +34,29 @@ def remove_stopwords(dataset):
         review = [ps.stem(word) for word in review if not word in set(all_stopwords)]
         review = ' '.join(review)
         corpus.append(review)
-        
+
     return corpus
 
 
 def preprocess(text):
-    cv = CountVectorizer(max_features = 1420)
+    cv = CountVectorizer(max_features=1420)
     X = cv.fit_transform(text).toarray()
     return X, cv
-    
+
 
 def save_preproccessing(cv):
-    bow_path = 'c1_BoW_Sentiment_Model.pkl'
+    bow_path = 'data/c1_BoW_Sentiment_Model.pkl'
     pickle.dump(cv, open(bow_path, "wb"))
 
 
 def train_model(X, y):
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.20, random_state = 0)
+    print('Training model...')
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=0)
 
     classifier = GaussianNB()
     classifier.fit(X_train, y_train)
 
-    joblib.dump(classifier, 'c2_Classifier_Sentiment_Model') 
+    joblib.dump(classifier, 'data/c2_Classifier_Sentiment_Model')
 
     y_pred = classifier.predict(X_test)
 
@@ -65,14 +67,33 @@ def train_model(X, y):
     print(accuracy)
 
 
-def main():
-    dataset = get_dataset('a1_RestaurantReviews_HistoricDump.tsv')
+def run_preprocessing():
+    print('Running preprocessing...')
+    dataset = get_dataset('data/a1_RestaurantReviews_HistoricDump.tsv')
     no_stopwords = remove_stopwords(dataset)
     X, cv = preprocess(no_stopwords)
-    save_preproccessing(cv)
     y = dataset.iloc[:, -1].values
-    train_model(X, y)
+    np.save('data/X.npy', X)
+    np.save('data/y.npy', y)
+    save_preproccessing(cv)
+
+
+def main():
+    if rerun_preprocessing:
+        run_preprocessing()
+    try:
+        X = np.load('data/X.npy')
+        y = np.load('data/y.npy')
+        train_model(X, y)
+    except FileNotFoundError:
+        print('Something went wrong when reading X and/or y or during training')
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument("--run_preprocessing", action='store_true', help="Add to run preprocessing")
+    args = parser.parse_args()
+
+    rerun_preprocessing = args.run_preprocessing
+
     main()
