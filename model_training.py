@@ -44,7 +44,7 @@ def preprocess(text):
     return X, cv
 
 
-def save_preproccessing(cv):
+def save_preprocessing(cv):
     bow_path = 'data/c1_BoW_Sentiment_Model.pkl'
     pickle.dump(cv, open(bow_path, "wb"))
 
@@ -75,7 +75,7 @@ def run_preprocessing():
     y = dataset.iloc[:, -1].values
     np.save('data/X.npy', X)
     np.save('data/y.npy', y)
-    save_preproccessing(cv)
+    save_preprocessing(cv)
 
 
 def main():
