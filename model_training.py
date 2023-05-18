@@ -45,7 +45,7 @@ def preprocess(text):
 
 
 def save_preprocessing(cv):
-    bow_path = 'data/c1_BoW_Sentiment_Model.pkl'
+    bow_path = 'ml_models/c1_BoW_Sentiment_Model.pkl'
     pickle.dump(cv, open(bow_path, "wb"))
 
 
@@ -56,7 +56,7 @@ def train_model(X, y):
     classifier = GaussianNB()
     classifier.fit(X_train, y_train)
 
-    joblib.dump(classifier, 'data/c2_Classifier_Sentiment_Model')
+    joblib.dump(classifier, 'ml_models/c2_Classifier_Sentiment_Model')
 
     y_pred = classifier.predict(X_test)
 
