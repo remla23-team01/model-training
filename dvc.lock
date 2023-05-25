@@ -29,3 +29,19 @@ stages:
     - path: ml_models/preproccesing_object.pkl
       md5: cb16fa613873e7a533c3f849f566d9d0
       size: 34146
+  train_model:
+    cmd: python src/train_model.py
+    deps:
+    - path: data/X.npy
+      md5: 995938fe8b1da807571fce76124bd9d3
+      size: 10224128
+    - path: data/y.npy
+      md5: b80a2d74a94a02652bf37dcc4a2bba6d
+      size: 7328
+    - path: src/train_model.py
+      md5: 364079dcff616c92006eaa16278138eb
+      size: 1437
+    outs:
+    - path: ml_models/c2_Classifier_Sentiment_Model
+      md5: 2d5a3a7cc92e92406be4edf52dd19be0
+      size: 46215

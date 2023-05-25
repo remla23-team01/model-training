@@ -14,3 +14,11 @@ stages:
     - data/X.npy
     - data/y.npy
     - ml_models/preproccesing_object.pkl
+  train_model:
+    cmd: python src/train_model.py
+    deps:
+    - data/X.npy
+    - data/y.npy
+    - src/train_model.py
+    outs:
+    - ml_models/c2_Classifier_Sentiment_Model
