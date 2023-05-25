@@ -5,3 +5,12 @@ stages:
     - src/get_data.py
     outs:
     - data/a1_RestaurantReviews_HistoricDump.csv
+  preprocess:
+    cmd: python src/preprocess.py
+    deps:
+    - data/a1_RestaurantReviews_HistoricDump.csv
+    - src/preprocess.py
+    outs:
+    - data/X.npy
+    - data/y.npy
+    - ml_models/preproccesing_object.pkl
