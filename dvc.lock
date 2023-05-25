@@ -1,0 +1,12 @@
+schema: '2.0'
+stages:
+  get_data:
+    cmd: python src/get_data.py
+    deps:
+    - path: src/get_data.py
+      md5: 2909e5940d29fb5a9d12ce2cf1c06500
+      size: 958
+    outs:
+    - path: data/a1_RestaurantReviews_HistoricDump.csv
+      md5: 098f672ad137b32db26f7f400bc72a52
+      size: 56185
