@@ -1,11 +1,13 @@
+"""Module for training the sentiment model."""
+
 import argparse
-import numpy as np
-import pandas as pd
 import re
 import pickle
+import numpy as np
+import pandas as pd
+
 import joblib
 
-import nltk
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 
@@ -16,12 +18,14 @@ from sklearn.metrics import confusion_matrix, accuracy_score
 
 
 def get_dataset(filename):
+    """Gets the dataset from the given filename."""
     dataset = pd.read_csv(filename, delimiter='\t', quoting=3)
     return dataset
 
 
 def remove_stopwords(dataset):
-    ps = PorterStemmer()
+    """Removes stopwords from the dataset."""
+    port_stemmer = PorterStemmer()
     all_stopwords = stopwords.words('english')
     all_stopwords.remove('not')
 
@@ -31,7 +35,7 @@ def remove_stopwords(dataset):
         review = re.sub('[^a-zA-Z]', ' ', dataset['Review'][i])
         review = review.lower()
         review = review.split()
-        review = [ps.stem(word) for word in review if not word in set(all_stopwords)]
+        review = [port_stemmer.stem(word) for word in review if not word in set(all_stopwords)]
         review = ' '.join(review)
         corpus.append(review)
 
@@ -39,17 +43,20 @@ def remove_stopwords(dataset):
 
 
 def preprocess(text):
-    cv = CountVectorizer(max_features=1420)
-    X = cv.fit_transform(text).toarray()
-    return X, cv
+    """Preprocesses the text."""
+    count_vec = CountVectorizer(max_features=1420)
+    transformation_arr = count_vec.fit_transform(text).toarray()
+    return transformation_arr, count_vec
 
 
-def save_preprocessing(cv):
+def save_preprocessing(count_vec):
+    """Saves the preprocessing."""
     bow_path = 'ml_models/c1_BoW_Sentiment_Model.pkl'
-    pickle.dump(cv, open(bow_path, "wb"))
+    pickle.dump(count_vec, open(bow_path, "wb"))
 
 
 def train_model(X, y):
+    """Trains the model."""
     print('Training model...')
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=0)
 
@@ -60,25 +67,27 @@ def train_model(X, y):
 
     y_pred = classifier.predict(X_test)
 
-    cm = confusion_matrix(y_test, y_pred)
-    print(cm)
+    confusion_mat = confusion_matrix(y_test, y_pred)
+    print(confusion_mat)
 
     accuracy = accuracy_score(y_test, y_pred)
     print(accuracy)
 
 
 def run_preprocessing():
+    """Runs the preprocessing."""
     print('Running preprocessing...')
     dataset = get_dataset('data/a1_RestaurantReviews_HistoricDump.tsv')
     no_stopwords = remove_stopwords(dataset)
-    X, cv = preprocess(no_stopwords)
+    X, count_vec = preprocess(no_stopwords)
     y = dataset.iloc[:, -1].values
     np.save('data/X.npy', X)
     np.save('data/y.npy', y)
-    save_preprocessing(cv)
+    save_preprocessing(count_vec)
 
 
 def main():
+    """Main function."""
     if rerun_preprocessing:
         run_preprocessing()
     try:

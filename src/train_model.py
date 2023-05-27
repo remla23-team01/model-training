@@ -1,3 +1,5 @@
+"""Module to train a model and save it to a specified path"""
+
 import joblib
 import numpy as np
 
@@ -20,8 +22,8 @@ def train_model(X, y):
 
     y_pred = classifier.predict(X_test)
 
-    cm = confusion_matrix(y_test, y_pred)
-    print(cm)
+    confusion_mat = confusion_matrix(y_test, y_pred)
+    print(confusion_mat)
 
     accuracy = accuracy_score(y_test, y_pred)
     print(accuracy)
@@ -46,12 +48,11 @@ def save_model(classifier, path):
     joblib.dump(classifier, path)
 
 def main():
+    """Main function to run script"""
     print("loading_data")
     X, y = load_training_data('data')
-    
     print("training_model")
     classifier = train_model(X, y)
-    
     print("saving_model")
     save_model(classifier, 'ml_models/c2_Classifier_Sentiment_Model')
 

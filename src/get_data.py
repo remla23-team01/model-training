@@ -1,10 +1,11 @@
+"""Gets raw data from a url and saves it to a specified path."""
 import pandas as pd
 
 def download_data(url):
     """
     Download raw data from a url. Needs to be a url to the raw data
     args:
-        url: str 
+        url: str
     """
     print('Downloading data...')
     dataset = pd.read_csv(url, delimiter='\t', quoting=3, header=0)
@@ -20,13 +21,14 @@ def save_data(data, path):
     """
     print('Saving data...')
     data.to_csv(path, index=False)
-    print('Succesfully saved data to "{}"'.format(path))
+    print(f"Succesfully saved data to {path}")
 
 def main():
-    url = "https://raw.githubusercontent.com/remla23-team01/model-training/main/data/a1_RestaurantReviews_HistoricDump.tsv"
+    """Main function to run script"""
+    url = "https://raw.githubusercontent.com/remla23-team01/"
+    url = url + "model-training/main/data/a1_RestaurantReviews_HistoricDump.tsv"
     data = download_data(url)
-    print("Preview of data:\n", data.head(), data.shape)
-    
+    print(f"Preview of data:\n, {data.head()}")
     path = "data/a1_RestaurantReviews_HistoricDump.csv"
     save_data(data, path)
 
