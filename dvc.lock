@@ -1,0 +1,47 @@
+schema: '2.0'
+stages:
+  get_data:
+    cmd: python src/get_data.py
+    deps:
+    - path: src/get_data.py
+      md5: 2909e5940d29fb5a9d12ce2cf1c06500
+      size: 958
+    outs:
+    - path: data/a1_RestaurantReviews_HistoricDump.csv
+      md5: 098f672ad137b32db26f7f400bc72a52
+      size: 56185
+  preprocess:
+    cmd: python src/preprocess.py
+    deps:
+    - path: data/a1_RestaurantReviews_HistoricDump.csv
+      md5: 098f672ad137b32db26f7f400bc72a52
+      size: 56185
+    - path: src/preprocess.py
+      md5: 6e0957db6d1038d48ca8abe88c576cc3
+      size: 2584
+    outs:
+    - path: data/X.npy
+      md5: 995938fe8b1da807571fce76124bd9d3
+      size: 10224128
+    - path: data/y.npy
+      md5: b80a2d74a94a02652bf37dcc4a2bba6d
+      size: 7328
+    - path: ml_models/preproccesing_object.pkl
+      md5: cb16fa613873e7a533c3f849f566d9d0
+      size: 34146
+  train_model:
+    cmd: python src/train_model.py
+    deps:
+    - path: data/X.npy
+      md5: 995938fe8b1da807571fce76124bd9d3
+      size: 10224128
+    - path: data/y.npy
+      md5: b80a2d74a94a02652bf37dcc4a2bba6d
+      size: 7328
+    - path: src/train_model.py
+      md5: 364079dcff616c92006eaa16278138eb
+      size: 1437
+    outs:
+    - path: ml_models/c2_Classifier_Sentiment_Model
+      md5: 2d5a3a7cc92e92406be4edf52dd19be0
+      size: 46215
