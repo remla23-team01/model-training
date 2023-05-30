@@ -27,7 +27,7 @@ stages:
       md5: b80a2d74a94a02652bf37dcc4a2bba6d
       size: 7328
     - path: ml_models/preproccesing_object.pkl
-      md5: cb16fa613873e7a533c3f849f566d9d0
+      md5: 23bd4409a5aa880698b6315c6df4e599
       size: 34146
   train_model:
     cmd: python src/train_model.py
