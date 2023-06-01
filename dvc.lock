@@ -17,8 +17,8 @@ stages:
       md5: 098f672ad137b32db26f7f400bc72a52
       size: 56185
     - path: src/preprocess.py
-      md5: 6e0957db6d1038d48ca8abe88c576cc3
-      size: 2584
+      md5: 29d33b011356fa551341bbb7bb49776a
+      size: 2324
     outs:
     - path: data/X.npy
       md5: 995938fe8b1da807571fce76124bd9d3
@@ -27,7 +27,7 @@ stages:
       md5: b80a2d74a94a02652bf37dcc4a2bba6d
       size: 7328
     - path: ml_models/preproccesing_object.pkl
-      md5: 23bd4409a5aa880698b6315c6df4e599
+      md5: 284c0b7b2c2da14e0f5dd4f1e620a4f9
       size: 34146
   train_model:
     cmd: python src/train_model.py

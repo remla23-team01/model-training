@@ -10,6 +10,8 @@ from nltk.stem.porter import PorterStemmer
 
 from sklearn.feature_extraction.text import CountVectorizer
 
+from remla01_lib import mlSteps
+
 def get_dataset(path):
     """
     Load dataset from a specified path
@@ -25,18 +27,11 @@ def remove_stopwords(dataset):
     args:
         dataset: pandas dataframe
     """
-    porter_stemmer = PorterStemmer()
-    all_stopwords = stopwords.words('english')
-    all_stopwords.remove('not')
 
     corpus = []
 
     for i in range(0, 900):
-        review = re.sub('[^a-zA-Z]', ' ', dataset['Review'][i])
-        review = review.lower()
-        review = review.split()
-        review = [porter_stemmer.stem(word) for word in review if not word in set(all_stopwords)]
-        review = ' '.join(review)
+        review = mlSteps.remove_stopwords(dataset['Review'][i])
         corpus.append(review)
 
     return corpus

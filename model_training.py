@@ -11,6 +11,8 @@ import joblib
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 
+from remla01_lib import mlSteps
+
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
@@ -32,11 +34,7 @@ def remove_stopwords(dataset):
     corpus = []
 
     for i in range(0, 900):
-        review = re.sub('[^a-zA-Z]', ' ', dataset['Review'][i])
-        review = review.lower()
-        review = review.split()
-        review = [port_stemmer.stem(word) for word in review if not word in set(all_stopwords)]
-        review = ' '.join(review)
+        review = mlSteps.remove_stopwords(dataset['Review'][i])
         corpus.append(review)
 
     return corpus
