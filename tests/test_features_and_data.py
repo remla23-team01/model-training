@@ -3,6 +3,9 @@ from src.preprocess import get_dataset
 
 class TestFeaturesAndData:
     def test_feature_distribution(self):
+        """
+        Tests that the ratio between positive and negative training data is not too large.
+        """
         training_data = get_dataset(
             "data/a1_RestaurantReviews_HistoricDump.tsv"
         )
