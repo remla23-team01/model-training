@@ -1,4 +1,5 @@
 import numpy as np
+import psutil
 import pytest
 from sklearn.model_selection import train_test_split
 
@@ -42,3 +43,12 @@ class TestMonitoring:
         new_acc = sum(model_new.predict(X_test) == y_test) / len(y_test)
 
         assert new_acc > old_acc
+
+    def test_ram_used_for_training(self, X, y):
+        """Test for ram used for training."""
+        pr = psutil.Process()
+        ram_used_before = pr.memory_info().rss
+        train_model(X, y)
+        end_ram_used = pr.memory_info().rss
+        # ram used for training is less than 1GB
+        assert end_ram_used - ram_used_before < 1000000000
