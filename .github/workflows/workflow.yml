@@ -23,14 +23,12 @@ jobs:
         run: |
           pylint --load-plugins=dslinter model_training.py
           pylint --load-plugins=dslinter ./src
-      - name: Test with pytest and check coverage
+      - name: Test with pytest
         run: |
           pytest --junitxml=junit/test-results.xml --cov=src --cov-report=html:htmlcov
-          coverage report --fail-under=70
       - name: Check coverage report
         run: |
           coverage report --fail-under=70
-        # Use always() to always run this step to publish test results when there are test failures
         if: ${{ always() }}
       - name: Upload pytest test results
         uses: actions/upload-artifact@v3
