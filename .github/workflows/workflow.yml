@@ -23,9 +23,10 @@ jobs:
         run: |
           pylint --load-plugins=dslinter model_training.py
           pylint --load-plugins=dslinter ./src
-      - name: Test with pytest
+      - name: Test with pytest and check coverage
         run: |
-          pytest --junitxml=junit/test-results.xml --cov --cov-report=html:htmlcov
+          pytest --junitxml=junit/test-results.xml --cov=src --cov-report=html:htmlcov
+          coverage report --fail-under=70
       - name: Upload pytest test results
         uses: actions/upload-artifact@v3
         with:
