@@ -75,7 +75,7 @@ def save_preprocessed_data(X, y, folder):
 
 def main():
     print("Loading dataset...")
-    dataset = get_dataset('data/a1_RestaurantReviews_HistoricDump.csv')
+    dataset = get_dataset('data/raw/a1_RestaurantReviews_HistoricDump.csv')
     print("Dataset loaded!")
     
     print(dataset)
@@ -87,7 +87,7 @@ def main():
     
     print("saving preprocessing step...")
     save_preprocessing(cv, "ml_models/preproccesing_object.pkl")
-    save_preprocessed_data(X, dataset.iloc[:, -1].values, "data")
+    save_preprocessed_data(X, dataset.iloc[:, -1].values, "data/processed")
     print("succesfully saved preprocessing step to 'ml_models/preproccesing_object.pkl'\n", 
           "saved X and y numpy arrays to folder '/data'")
     

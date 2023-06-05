@@ -7,7 +7,7 @@ def download_data(url):
         url: str 
     """
     print('Downloading data...')
-    dataset = pd.read_csv(url, delimiter='\t', quoting=3, header=0)
+    dataset = pd.read_csv(url, sep=",", header=0)
     print('Succesfully downloaded data!')
     return dataset
 
@@ -19,7 +19,7 @@ def save_data(data, path):
         path: str
     """
     print('Saving data...')
-    data.to_csv(path, index=False)
+    data.to_csv(path, sep=",", index=False)
     print('Succesfully saved data to "{}"'.format(path))
 
 def main():
@@ -27,7 +27,7 @@ def main():
     data = download_data(url)
     print("Preview of data:\n", data.head(), data.shape)
     
-    path = "data/a1_RestaurantReviews_HistoricDump.csv"
+    path = "data/raw/a1_RestaurantReviews_HistoricDump.csv"
     save_data(data, path)
 
 if __name__ == '__main__':
