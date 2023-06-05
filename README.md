@@ -1,19 +1,15 @@
 # Sentiment Analysis
 
-This is a project to train a model that performs sentiment analysis on restaurant reviews.
-The training pipeline is in `b1_Sentiment_Analysis_Model.ipynb`.
-The inference pipeline is in `b2_Sentiment_Predictor.ipynb`.
-Training data is in `a1_RestaurantReviews_HistoricDump.tsv`.
+This is a project to train a model that performs sentiment analysis on restaurant reviews. The repo follows the [cookiecutter](https://github.com/drivendata/cookiecutter-data-science) format.
+It is set up using DVC and a google drive remote.
 
-Dependencies:
+To train the model, clone the branch and install all dependencies in the `requirements.txt`
+Then you should be able to run `dvc repro` to train the model and look at the metrics.
+To check metrics of different branches use `dvc metrics diff`
 
-- notebook
-- pandas
-- nltk
-- scikit-learn
+The model training is split up in 3 parts. The collecting of the data, the preprocessing and finaly the model training. Each step has its own outputs that are then used for the next step. 
 
-Credits
+
+### Credits
 
 This project is based on Skillcate AI "Sentiment Analysis Project — with traditional ML & NLP".
-
-To train the model run `python model-training.py1`, add the `--run_preprocessing` flag to rerun the preprocessing step.
