@@ -1,14 +1,14 @@
 """Module to preprocess the dataset and save the preprocessed data and preprocessing object"""
 
-import re
 import pickle
+import re
+
 import numpy as np
 import pandas as pd
-
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
-
 from sklearn.feature_extraction.text import CountVectorizer
+
 
 def get_dataset(path):
     """
@@ -19,6 +19,7 @@ def get_dataset(path):
     dataset = pd.read_csv(path)
     return dataset
 
+
 def remove_stopwords(dataset):
     """
     Remove stopwords from dataset
@@ -26,20 +27,25 @@ def remove_stopwords(dataset):
         dataset: pandas dataframe
     """
     porter_stemmer = PorterStemmer()
-    all_stopwords = stopwords.words('english')
-    all_stopwords.remove('not')
+    all_stopwords = stopwords.words("english")
+    all_stopwords.remove("not")
 
     corpus = []
 
-    for i in range(0, 900):
-        review = re.sub('[^a-zA-Z]', ' ', dataset['Review'][i])
+    for i in range(dataset.shape[0]):
+        review = re.sub("[^a-zA-Z]", " ", dataset["Review"][i])
         review = review.lower()
         review = review.split()
-        review = [porter_stemmer.stem(word) for word in review if not word in set(all_stopwords)]
-        review = ' '.join(review)
+        review = [
+            porter_stemmer.stem(word)
+            for word in review
+            if not word in set(all_stopwords)
+        ]
+        review = " ".join(review)
         corpus.append(review)
 
     return corpus
+
 
 def preprocess(dataset):
     """
@@ -61,6 +67,7 @@ def save_preprocessing(count_vec, path):
     """
     pickle.dump(count_vec, open(path, "wb"))
 
+
 def save_preprocessed_data(X, y, folder):
     """
     save numpy arrays of preproccessed data to a specified folder
@@ -69,25 +76,30 @@ def save_preprocessed_data(X, y, folder):
         y: numpy array
         folder: str
     """
-    np.save(f"{folder}/X.npy", X) # save X
-    np.save(f"{folder}/y.npy", y) # save y
+    np.save(f"{folder}/X.npy", X)  # save X
+    np.save(f"{folder}/y.npy", y)  # save y
+
 
 def main():
     """Main function to run script"""
     print("Loading dataset...")
-    dataset = get_dataset('data/a1_RestaurantReviews_HistoricDump.csv')
+    dataset = get_dataset("data/a1_RestaurantReviews_HistoricDump.csv")
     print("Dataset loaded!")
     print(dataset)
     print("Preprocessing dataset...")
     no_stopwords = remove_stopwords(dataset)
     X, cv = preprocess(no_stopwords)
-    print("Dataset preprocessed, removed stopwords and used a count vectorizer")
+    print(
+        "Dataset preprocessed, removed stopwords and used a count vectorizer"
+    )
     print("saving preprocessing step...")
     save_preprocessing(cv, "ml_models/preproccesing_object.pkl")
     save_preprocessed_data(X, dataset.iloc[:, -1].values, "data")
-    print("succesfully saved preprocessing step to 'ml_models/preproccesing_object.pkl'\n",
-          "saved X and y numpy arrays to folder '/data'")
+    print(
+        "succesfully saved preprocessing step to 'ml_models/preproccesing_object.pkl'\n",
+        "saved X and y numpy arrays to folder '/data'",
+    )
 
-    
+
 if __name__ == "__main__":
     main()
