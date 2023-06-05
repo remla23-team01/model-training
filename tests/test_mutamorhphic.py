@@ -44,8 +44,3 @@ class TestMutamorphic:
         )
 
         return mutated_review
-
-    def test_mutamorphic(self, X, y):
-        print("I like it")
-        print(self.generate_mutation_for_review("I like it"))
-        assert True
