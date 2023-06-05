@@ -1,6 +1,6 @@
 import pytest
 
-from src.preprocess import get_dataset
+from src.features.preprocess import get_dataset
 
 
 @pytest.fixture

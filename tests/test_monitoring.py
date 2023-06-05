@@ -3,7 +3,7 @@ import psutil
 import pytest
 from sklearn.model_selection import train_test_split
 
-from src.train_model import train_model
+from src.models.train_model import train_model
 
 
 @pytest.fixture

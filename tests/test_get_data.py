@@ -2,7 +2,7 @@ import os
 
 import pandas as pd
 
-from src.get_data import download_data, get_data, save_data
+from src.data.get_data import download_data, get_data, save_data
 
 
 class TestGetData:

@@ -5,8 +5,8 @@ import numpy as np
 import pytest
 from sklearn.model_selection import train_test_split
 
-from src.preprocess import main
-from src.train_model import train_model
+from src.features.preprocess import main
+from src.models.train_model import train_model
 
 
 @pytest.fixture

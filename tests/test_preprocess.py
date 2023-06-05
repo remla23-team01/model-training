@@ -2,7 +2,7 @@ import pandas as pd
 import pytest
 from sklearn.feature_extraction.text import CountVectorizer
 
-from src.preprocess import get_dataset, preprocess, remove_stopwords
+from src.features.preprocess import get_dataset, preprocess, remove_stopwords
 
 
 @pytest.fixture
