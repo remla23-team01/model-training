@@ -1,12 +1,10 @@
 import joblib
 import numpy as np
 import pandas as pd
-import pytest
 from nltk.corpus import wordnet
 from sklearn.model_selection import train_test_split
 
-from model_training import get_dataset, preprocess, remove_stopwords
-from src.train_model import train_model
+from model_training import remove_stopwords
 
 
 class TestMutamorphic:
@@ -41,7 +39,8 @@ class TestMutamorphic:
         """
         model = joblib.load("ml_models/c2_Classifier_Sentiment_Model")
 
-        dataset = get_dataset("data/a1_RestaurantReviews_HistoricDump.tsv")
+        # read csv and seperate by new line
+        dataset = pd.read_csv("data/a1_RestaurantReviews_HistoricDump.tsv")
 
         dataset_preprocessed = remove_stopwords(dataset)
 
@@ -53,11 +52,14 @@ class TestMutamorphic:
         )
 
         # mutate X_test
-        X_test_mutated = X_test.apply(self.generate_mutation_for_review)
+        X_test_mutated = [
+            self.generate_mutation_for_review(review) for review in X_test
+        ]
 
         # preprocess
-        X_test, _ = preprocess(X_test)
-        X_test_mutated, _ = preprocess(X_test_mutated)
+        count_vec = joblib.load("ml_models/c1_BoW_Sentiment_Model.pkl")
+        X_test = count_vec.transform(X_test).toarray()
+        X_test_mutated = count_vec.transform(X_test_mutated).toarray()
 
         # test accuracy
         accuracy = sum(model.predict(X_test) == y_test) / len(y_test)
@@ -65,4 +67,5 @@ class TestMutamorphic:
             y_test
         )
 
-        assert abs(accuracy - mutated_accuracy) < 0.2
+        # assert accuracy is similar to mutated accuracy (within 10%)
+        assert abs(accuracy - mutated_accuracy) < 0.1
