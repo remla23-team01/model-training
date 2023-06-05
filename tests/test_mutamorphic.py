@@ -1,10 +1,13 @@
 import joblib
+import nltk
 import numpy as np
 import pandas as pd
 from nltk.corpus import wordnet
 from sklearn.model_selection import train_test_split
 
 from model_training import remove_stopwords
+
+nltk.download("wordnet")
 
 
 class TestMutamorphic:
