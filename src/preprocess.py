@@ -3,11 +3,14 @@
 import pickle
 import re
 
+import nltk
 import numpy as np
 import pandas as pd
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 from sklearn.feature_extraction.text import CountVectorizer
+
+nltk.download("stopwords")
 
 
 def get_dataset(path):
