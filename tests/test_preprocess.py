@@ -2,7 +2,7 @@ import pandas as pd
 import pytest
 from sklearn.feature_extraction.text import CountVectorizer
 
-from src.features.preprocess import get_dataset, preprocess, remove_stopwords
+from src.features.preprocess import get_dataset, preprocess_dataset, remove_stopwords
 
 
 @pytest.fixture
@@ -41,7 +41,7 @@ class TestPreprocess:
 
     def test_preprocess(self, mock_dataset):
         # Call the method to preprocess the data
-        transformed_vec, count_vec = preprocess(mock_dataset)
+        transformed_vec, count_vec = preprocess_dataset(mock_dataset)
 
         # Assert the expected output
         assert transformed_vec == [[1]]

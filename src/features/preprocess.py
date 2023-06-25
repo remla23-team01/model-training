@@ -50,7 +50,7 @@ def remove_stopwords(dataset):
     return corpus
 
 
-def preprocess(dataset):
+def preprocess_dataset(dataset):
     """
     Preprocess dataset and return X and the count vectorizer object
     args:
@@ -86,20 +86,21 @@ def save_preprocessed_data(X, y, folder):
 def main():
     """Main function to run script"""
     print("Loading dataset...")
-    dataset = get_dataset('data/raw/a1_RestaurantReviews_HistoricDump.csv')
+    dataset = get_dataset("data/raw/a1_RestaurantReviews_HistoricDump.csv")
     print("Dataset loaded!")
     print(dataset)
     print("Preprocessing dataset...")
     no_stopwords = remove_stopwords(dataset)
-    X, cv = preprocess(no_stopwords)
-    print(
-        "Dataset preprocessed, removed stopwords and used a count vectorizer"
-    )
+    X, cv = preprocess_dataset(no_stopwords)
+    print("Dataset preprocessed, removed stopwords and used a count vectorizer")
     print("saving preprocessing step...")
     save_preprocessing(cv, "ml_models/preproccesing_object.pkl")
     save_preprocessed_data(X, dataset.iloc[:, -1].values, "data/processed")
-    print("succesfully saved preprocessing step to 'ml_models/preproccesing_object.pkl'\n",
-          "saved X and y numpy arrays to folder '/data/processed'")
+    print(
+        "succesfully saved preprocessing step to 'ml_models/preproccesing_object.pkl'\n",
+        "saved X and y numpy arrays to folder '/data/processed'",
+    )
+
 
 if __name__ == "__main__":
     main()

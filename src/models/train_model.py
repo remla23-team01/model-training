@@ -1,9 +1,10 @@
 """Module to train a model and save it to a specified path"""
 
+import json
+
 import joblib
 import numpy as np
 from sklearn.metrics import accuracy_score, confusion_matrix
-import json
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 
@@ -40,8 +41,8 @@ def load_training_data(folder_path):
     """
     load preprocessed training data from a specified folder path
     """
-    X = np.load(f'{folder_path}/X.npy')
-    y = np.load(f'{folder_path}/y.npy')
+    X = np.load(f"{folder_path}/X.npy")
+    y = np.load(f"{folder_path}/y.npy")
     return X, y
 
 
@@ -58,7 +59,7 @@ def save_model(classifier, path):
 def main():
     """Main function to run script"""
     print("loading_data")
-    X, y = load_training_data('data/processed')
+    X, y = load_training_data("data/processed")
     print("training_model")
     classifier = train_model(X, y)
     print("saving_model")

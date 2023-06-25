@@ -8,9 +8,9 @@ def download_data(url):
     args:
         url: str
     """
-    print('Downloading data...')
+    print("Downloading data...")
     dataset = pd.read_csv(url, sep=",", header=0)
-    print('Succesfully downloaded data!')
+    print("Succesfully downloaded data!")
     return dataset
 
 

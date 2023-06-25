@@ -66,9 +66,7 @@ class TestMutamorphic:
 
         # test accuracy
         accuracy = sum(model.predict(X_test) == y_test) / len(y_test)
-        mutated_accuracy = sum(model.predict(X_test_mutated) == y_test) / len(
-            y_test
-        )
+        mutated_accuracy = sum(model.predict(X_test_mutated) == y_test) / len(y_test)
 
         # assert accuracy is similar to mutated accuracy (within 10%)
         assert abs(accuracy - mutated_accuracy) < 0.1

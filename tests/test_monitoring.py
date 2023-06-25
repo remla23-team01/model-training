@@ -30,9 +30,7 @@ class TestMonitoring:
         X_old, y_old = X[:300], y[:300]
         model_old = train_model(X_old, y_old)
 
-        _, X_test, _, y_test = train_test_split(
-            X, y, test_size=0.20, random_state=0
-        )
+        _, X_test, _, y_test = train_test_split(X, y, test_size=0.20, random_state=0)
 
         old_acc = sum(model_old.predict(X_test) == y_test) / len(y_test)
 
