@@ -58,10 +58,24 @@ jobs:
           python3 -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Run linting
-        run: python3 -m mllint --output ./report.md
+      - name: Run mllint
+        run: python3 -m mllint --output ./mllint_report.md
 
       - uses: actions/upload-artifact@v3
         with:
           name: mllint-report
-          path: ./report.md
+          path: ./mllint_report.md
+
+  generate_pr_report_with_mllint:
+    needs: mllint
+    runs-on: ubuntu-22.04
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: mllint-report
+      - uses: mshick/add-pr-comment@v2
+        with:
+          message-path: |
+            ./mllint_report.md
