@@ -1,47 +1,50 @@
 schema: '2.0'
 stages:
   get_data:
-    cmd: python src/get_data.py
+    cmd: python src/data/get_data.py
     deps:
-    - path: src/get_data.py
-      md5: 2909e5940d29fb5a9d12ce2cf1c06500
-      size: 958
+    - path: src/data/get_data.py
+      md5: 125a215c0e3d9532c0c3aaab6da3d918
+      size: 1045
     outs:
-    - path: data/a1_RestaurantReviews_HistoricDump.csv
+    - path: data/raw/a1_RestaurantReviews_HistoricDump.csv
       md5: 098f672ad137b32db26f7f400bc72a52
       size: 56185
   preprocess:
-    cmd: python src/preprocess.py
+    cmd: python src/features/preprocess.py
     deps:
-    - path: data/a1_RestaurantReviews_HistoricDump.csv
+    - path: data/raw/a1_RestaurantReviews_HistoricDump.csv
       md5: 098f672ad137b32db26f7f400bc72a52
       size: 56185
-    - path: src/preprocess.py
-      md5: 29d33b011356fa551341bbb7bb49776a
-      size: 2324
+    - path: src/features/preprocess.py
+      md5: 430433ace6c0555f438e363cf6d4873b
+      size: 2763
     outs:
-    - path: data/X.npy
+    - path: data/processed/X.npy
       md5: 995938fe8b1da807571fce76124bd9d3
       size: 10224128
-    - path: data/y.npy
+    - path: data/processed/y.npy
       md5: b80a2d74a94a02652bf37dcc4a2bba6d
       size: 7328
     - path: ml_models/preproccesing_object.pkl
-      md5: 284c0b7b2c2da14e0f5dd4f1e620a4f9
+      md5: 946848b1128d37173c7e01a134db091a
       size: 34146
   train_model:
-    cmd: python src/train_model.py
+    cmd: python src/models/train_model.py
     deps:
-    - path: data/X.npy
+    - path: data/processed/X.npy
       md5: 995938fe8b1da807571fce76124bd9d3
       size: 10224128
-    - path: data/y.npy
+    - path: data/processed/y.npy
       md5: b80a2d74a94a02652bf37dcc4a2bba6d
       size: 7328
-    - path: src/train_model.py
-      md5: 364079dcff616c92006eaa16278138eb
-      size: 1437
+    - path: src/models/train_model.py
+      md5: 6d07a055276c9fb546df0b006216de06
+      size: 1737
     outs:
     - path: ml_models/c2_Classifier_Sentiment_Model
       md5: 2d5a3a7cc92e92406be4edf52dd19be0
       size: 46215
+    - path: ml_models/metrics/metrics.json
+      md5: cd6f5fb4cb9281088914cac59ba8be5c
+      size: 32

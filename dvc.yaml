@@ -1,24 +1,27 @@
 stages:
   get_data:
-    cmd: python src/get_data.py
+    cmd: python src/data/get_data.py
     deps:
-    - src/get_data.py
+    - src/data/get_data.py
     outs:
-    - data/a1_RestaurantReviews_HistoricDump.csv
+    - data/raw/a1_RestaurantReviews_HistoricDump.csv
   preprocess:
-    cmd: python src/preprocess.py
+    cmd: python src/features/preprocess.py
     deps:
-    - data/a1_RestaurantReviews_HistoricDump.csv
-    - src/preprocess.py
+    - data/raw/a1_RestaurantReviews_HistoricDump.csv
+    - src/features/preprocess.py
     outs:
-    - data/X.npy
-    - data/y.npy
+    - data/processed/X.npy
+    - data/processed/y.npy
     - ml_models/preproccesing_object.pkl
   train_model:
-    cmd: python src/train_model.py
+    cmd: python src/models/train_model.py
     deps:
-    - data/X.npy
-    - data/y.npy
-    - src/train_model.py
+    - data/processed/X.npy
+    - data/processed/y.npy
+    - src/models/train_model.py
     outs:
     - ml_models/c2_Classifier_Sentiment_Model
+    metrics:
+      - ml_models/metrics/metrics.json:
+          cache: false
