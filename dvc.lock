@@ -4,8 +4,8 @@ stages:
     cmd: python src/data/get_data.py
     deps:
     - path: src/data/get_data.py
-      md5: d06243d6636384e0b6aae9497e5f78a0
-      size: 1134
+      md5: 6dd5991f3ccc75248714cbc974feb37d
+      size: 1273
     outs:
     - path: data/raw/a1_RestaurantReviews_HistoricDump.csv
       md5: 098f672ad137b32db26f7f400bc72a52
