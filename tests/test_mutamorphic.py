@@ -40,7 +40,7 @@ class TestMutamorphic:
         """
         Test mutaphormic.
         """
-        model = joblib.load("ml_models/preproccessing_object.pkl")
+        model = joblib.load("ml_models/c2_Classifier_Sentiment_Model")
 
         # read csv and seperate by new line
         dataset = pd.read_csv("data/a1_RestaurantReviews_HistoricDump.tsv")
@@ -60,7 +60,7 @@ class TestMutamorphic:
         ]
 
         # preprocess
-        count_vec = joblib.load("ml_models/preproccessing_object.pkl")
+        count_vec = joblib.load("ml_models/preproccesing_object.pkl")
         X_test = count_vec.transform(X_test).toarray()
         X_test_mutated = count_vec.transform(X_test_mutated).toarray()
 
