@@ -22,15 +22,31 @@ jobs:
       - name: Lint with pylint
         run: |
           pylint --load-plugins=dslinter ./src
-      - name: run dvc repro
+
+      - name: Run dvc repro
         run: |
           dvc repro
-
       - uses: actions/upload-artifact@v3
         with:
-          name: remote-data
+          name: dvc-data-artifact
           path: ./data
 
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Test with pytest
         run: |
           pytest --junitxml=junit/test-results.xml --cov=src --cov-report=html:htmlcov
