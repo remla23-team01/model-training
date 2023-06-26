@@ -25,6 +25,12 @@ jobs:
       - name: run dvc repro
         run: |
           dvc repro
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: remote-data
+          path: ./data
+
       - name: Test with pytest
         run: |
           pytest --junitxml=junit/test-results.xml --cov=src --cov-report=html:htmlcov
