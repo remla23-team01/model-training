@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: dslinter-report
-          path: dslinter_report.txt
+          path: outputs/dslinter_report.txt
 
       - name: Run dvc pipeline
         run: |
