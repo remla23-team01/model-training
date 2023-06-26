@@ -1,10 +1,11 @@
 """Gets raw data from a url and saves it to a specified path."""
-import pandas as pd
 import gdown
+import pandas as pd
 
 
 def download_data_gdrive(url, output_path):
-    gdown.download(url, output_path, quiet=False,fuzzy=True)
+    gdown.download(url, output_path, quiet=False, fuzzy=True)
+
 
 def download_data(url):
     """
@@ -39,6 +40,7 @@ def get_data():
     print(f"Preview of data:\n, {data.head()}")
     path = "data/raw/a1_RestaurantReviews_HistoricDump.csv"
     save_data(data, path)
+
 
 if __name__ == "__main__":
     get_data()
