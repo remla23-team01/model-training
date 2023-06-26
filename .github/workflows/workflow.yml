@@ -22,6 +22,9 @@ jobs:
       - name: Lint with pylint
         run: |
           pylint --load-plugins=dslinter ./src
+      - name: Pull files using dvc from remote storage
+        run: |
+          dvc pull
       - name: Test with pytest
         run: |
           pytest --junitxml=junit/test-results.xml --cov=src --cov-report=html:htmlcov
