@@ -1,18 +1,12 @@
 [![Coverage Status](https://coveralls.io/repos/github/remla23-team01/model-training/badge.svg)](https://coveralls.io/github/remla23-team01/model-training)
 
-# model-training
+# Model-training
 
 ## Sentiment Analysis
-
 This is a project to train a model that performs sentiment analysis on restaurant reviews.
-The training pipeline is in `b1_Sentiment_Analysis_Model.ipynb`.
-The inference pipeline is in `b2_Sentiment_Predictor.ipynb`.
-Training data is in `a1_RestaurantReviews_HistoricDump.tsv`.
 
-Credits
+#### Credits
 This project is based on Skillcate AI "Sentiment Analysis Project — with traditional ML & NLP".
-
-To train the model run `python model-training.py1`, add the `--run_preprocessing` flag to rerun the preprocessing step.
 
 ## Running the pipeline
 
@@ -50,10 +44,31 @@ python3 -m pip freeze > requirements.txt
 ```
 
 ## Running the project
+The training of the model is setup using DVC. Training is split up in the following 3 steps, getting the data, preprocessing the data and finally training the model. The python scripts for each step can be found in the `/src` folder. `get_data.py` downloads the data and saves it locally. `preprocess.py` takes this file and performs some preprocessing steps on the data and saves both the preprocessed data and the preprocessing object. Finally, `train_model.py` trains the model on the processed data and saves the model and some metrics.
 
-## Running DVC
+Running these files in the same order as explained will train the model.
+
+## Run using DVC
+All of these output files are tracked using DVC to prevent unneccesary steps from being executed. `dvc.yaml` clearly shows all the input, output and metrics files. DVC tracks these files and stores them in a google drive folder.
+
+To pull files from the remote drive folder run:
+
+```
+dvc pull
+```
+
+To run the model training, run the following command:
+```
+dvc repro
+```
+
+This will run each of the steps, but only if something changed compared to previous runs.
 
 ## Running the metrics
+To look at the accuracy of the model run: 
+```
+dvc metrics show
+```
 
 ### Running tests with coverage
 
