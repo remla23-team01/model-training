@@ -43,7 +43,7 @@ jobs:
           dvc metrics show
       - name: Test with pytest
         run: |
-          pytest --junitxml=junit/test-results.xml --cov=src --cov-report=html:htmlcov
+          pytest --junitxml=junit/test-results.xml
       - name: Show test coverage percentage
         run: |
           coverage report --fail-under=70
@@ -71,6 +71,14 @@ jobs:
     needs: build_and_test
     steps:
       - uses: actions/checkout@v3
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: pytest-results
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: coverage-report
 
       - name: Install dependencies
         run: |
