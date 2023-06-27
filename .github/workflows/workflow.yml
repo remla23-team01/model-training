@@ -19,11 +19,9 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
       - name: Lint with PyLint
         run: |
           pylint --fail-under=8.0 ./src
-
       - name: Lint with DSLinter
         run: |
           pylint --fail-under=8.0 --load-plugins=dslinter ./src
@@ -43,18 +41,13 @@ jobs:
       - name: Show dvc metrics
         run: |
           dvc metrics show
-
       - name: Test with pytest
         run: |
-          pytest --junitxml=junit/test-coverage.xml
+          pytest --junitxml=junit/test-results.xml --cov=src --cov-report=html:htmlcov
       - name: Show test coverage percentage
         run: |
           coverage report --fail-under=70
         if: ${{ always() }}
-
-      - name: Generate coveralls badge
-        uses: coverallsapp/github-action@v2
-
       - name: Upload pytest report
         uses: actions/upload-artifact@v3
         with:
@@ -66,9 +59,12 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: coverage-report
-          path: ./coverage.xml
+          path: htmlcov/
         # Use always() to always run this step to publish test results when there are test failures
         if: ${{ always() }}
+
+      - name: Generate coveralls badge
+        uses: coverallsapp/github-action@v2
 
   run_mllint:
     runs-on: ubuntu-22.04
@@ -80,7 +76,6 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
       - name: Run mllint
         run: python3 -m mllint --output ./mllint_report.md
 
