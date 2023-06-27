@@ -1,13 +1,14 @@
 """Module to preprocess the dataset and save the preprocessed data and preprocessing object"""
 
 import pickle
+
 import numpy as np
 import pandas as pd
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
+from remla01_lib import mlSteps
 from sklearn.feature_extraction.text import CountVectorizer
 
-from remla01_lib import mlSteps
 
 def get_dataset(path):
     """
@@ -29,7 +30,7 @@ def remove_stopwords(dataset):
     corpus = []
 
     for i in range(dataset.shape[0]):
-        review = mlSteps.remove_stopwords(dataset['Review'][i])
+        review = mlSteps.remove_stopwords(dataset["Review"][i])
         corpus.append(review)
 
     return corpus
