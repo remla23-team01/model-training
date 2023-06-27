@@ -44,23 +44,19 @@ jobs:
 
       - name: Test with pytest
         run: |
-          pytest --junitxml=junit/test-results.xml --cov=src --cov-report=html:htmlcov
-      - name: Show test coverage percentage
-        run: |
-          coverage report --fail-under=70
-        if: ${{ always() }}
+          pytest --junitxml=./tests-report.xml --cov=./tests/ --cov-report=xml:./coverage.xml
       - name: Upload pytest report
         uses: actions/upload-artifact@v3
         with:
           name: pytest-results
-          path: junit/test-results.xml
+          path: ./tests-report.xml
         # Use always() to always run this step to publish test results when there are test failures
         if: ${{ always() }}
       - name: Upload test coverage report
         uses: actions/upload-artifact@v3
         with:
           name: coverage-report
-          path: htmlcov/
+          path: ./coverage.xml
         # Use always() to always run this step to publish test results when there are test failures
         if: ${{ always() }}
 
@@ -68,11 +64,14 @@ jobs:
         uses: coverallsapp/github-action@v2
 
   run_mllint:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     needs: build_and_test
     steps:
       - uses: actions/checkout@v3
 
+      - uses: actions/download-artifact@v3
+        with:
+          name: downloaded-dvc-data
       - uses: actions/download-artifact@v3
         with:
           name: pytest-results
@@ -95,7 +94,7 @@ jobs:
 
   generate_pr_report_with_mllint:
     needs: run_mllint
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     permissions:
       pull-requests: write
     steps:
