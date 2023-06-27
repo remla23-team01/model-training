@@ -42,9 +42,9 @@ jobs:
         run: |
           dvc metrics show
 
-      - name: Test with pytest
+      - name: Test with pytest and generate coverage reports
         run: |
-          pytest --junitxml=outputs/tests-report.xml
+          pytest --junitxml=outputs/test-report.xml --cov=./tests/ --cov-report=xml:outputs/coverage.xml
       - name: Upload pytest report
         uses: actions/upload-artifact@v3
         with:
