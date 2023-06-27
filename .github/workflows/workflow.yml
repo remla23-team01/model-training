@@ -41,9 +41,10 @@ jobs:
       - name: Show dvc metrics
         run: |
           dvc metrics show
+
       - name: Test with pytest
         run: |
-          pytest --junitxml=junit/test-results.xml
+          pytest --junitxml=junit/test-results.xml --cov=src --cov-report=html:htmlcov
       - name: Show test coverage percentage
         run: |
           coverage report --fail-under=70
