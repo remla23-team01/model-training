@@ -1,0 +1,23 @@
+rules:
+    disabled: []
+    custom: []
+git:
+    maxFileSize: 10000000
+code-quality:
+    linters:
+        - mypy
+        - black
+        - isort
+        - bandit
+testing:
+    report: "outputs/tests-report.xml"
+    targets:
+        minimum: 1
+        ratio:
+            tests: 1
+            other: 4
+    coverage:
+        report: "outputs/coverage.xml"
+        targets:
+            line: 80
+
