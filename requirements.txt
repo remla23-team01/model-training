@@ -8,6 +8,8 @@ async-timeout==4.0.2
 asyncssh==2.13.1
 atpublic==3.1.1
 attrs==23.1.0
+bandit==1.7.5
+black==23.3.0
 billiard==3.6.4.0
 celery==5.2.7
 certifi==2023.5.7

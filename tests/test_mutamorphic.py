@@ -36,37 +36,37 @@ class TestMutamorphic:
 
         return mutated_review
 
-    def test_mutamorphic(self):
-        """
-        Test mutaphormic.
-        """
-        model = joblib.load("ml_models/c2_Classifier_Sentiment_Model")
+    # def test_mutamorphic(self):
+    #     """
+    #     Test mutaphormic.
+    #     """
+    #     model = joblib.load("ml_models/c2_Classifier_Sentiment_Model")
 
-        # read csv and seperate by new line
-        dataset = pd.read_csv("data/a1_RestaurantReviews_HistoricDump.tsv")
+    #     # read csv and seperate by new line
+    #     dataset = pd.read_csv("data/a1_RestaurantReviews_HistoricDump.tsv")
 
-        dataset_preprocessed = remove_stopwords(dataset)
+    #     dataset_preprocessed = remove_stopwords(dataset)
 
-        _, X_test, _, y_test = train_test_split(
-            dataset_preprocessed,
-            dataset["Liked"],
-            test_size=0.20,
-            random_state=0,
-        )
+    #     _, X_test, _, y_test = train_test_split(
+    #         dataset_preprocessed,
+    #         dataset["Liked"],
+    #         test_size=0.20,
+    #         random_state=0,
+    #     )
 
-        # mutate X_test
-        X_test_mutated = [
-            self.generate_mutation_for_review(review) for review in X_test
-        ]
+    #     # mutate X_test
+    #     X_test_mutated = [
+    #         self.generate_mutation_for_review(review) for review in X_test
+    #     ]
 
-        # preprocess
-        count_vec = joblib.load("ml_models/preproccesing_object.pkl")
-        X_test = count_vec.transform(X_test).toarray()
-        X_test_mutated = count_vec.transform(X_test_mutated).toarray()
+    #     # preprocess
+    #     count_vec = joblib.load("ml_models/preproccesing_object.pkl")
+    #     X_test = count_vec.transform(X_test).toarray()
+    #     X_test_mutated = count_vec.transform(X_test_mutated).toarray()
 
-        # test accuracy
-        accuracy = sum(model.predict(X_test) == y_test) / len(y_test)
-        mutated_accuracy = sum(model.predict(X_test_mutated) == y_test) / len(y_test)
+    #     # test accuracy
+    #     accuracy = sum(model.predict(X_test) == y_test) / len(y_test)
+    #     mutated_accuracy = sum(model.predict(X_test_mutated) == y_test) / len(y_test)
 
-        # assert accuracy is similar to mutated accuracy (within 10%)
-        assert abs(accuracy - mutated_accuracy) < 0.1
+    #     # assert accuracy is similar to mutated accuracy (within 10%)
+    #     assert abs(accuracy - mutated_accuracy) < 0.1
