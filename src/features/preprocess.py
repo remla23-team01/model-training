@@ -28,7 +28,7 @@ def remove_stopwords(dataset):
 
     corpus = []
 
-    for i in range(0, 900):
+    for i in range(dataset.shape[0]):
         review = mlSteps.remove_stopwords(dataset['Review'][i])
         corpus.append(review)
 
