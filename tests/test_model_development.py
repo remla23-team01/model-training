@@ -30,13 +30,9 @@ class TestModelDevelopment:
         """
         Tests the model performs better than randomly selecting positive or negative.
         """
-        if not os.path.exists("data/X.npy") or not os.path.exists(
-            "data/y.npy"
-        ):
+        if not os.path.exists("data/X.npy") or not os.path.exists("data/y.npy"):
             main()
-        _, X_test, _, y_test = train_test_split(
-            X, y, test_size=0.20, random_state=0
-        )
+        _, X_test, _, y_test = train_test_split(X, y, test_size=0.20, random_state=0)
         model = joblib.load("ml_models/c2_Classifier_Sentiment_Model")
         assert sum(model.predict(X_test) == y_test) / len(y_test) > 0.5
 

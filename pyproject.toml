@@ -1,0 +1,9 @@
+[tool.mypy]
+
+[tool.black]
+
+[tool.isort]
+profile = "black"
+
+[tool.bandit]
+
