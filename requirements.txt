@@ -102,3 +102,4 @@ voluptuous==0.13.1
 wcwidth==0.2.6
 yarl==1.9.2
 zc.lockfile==3.0.post1
+remla01_lib@git+https://github.com/remla23-team01/lib@v1.0.0
